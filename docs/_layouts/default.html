@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
   {%- include head.html -%}
+
+  <head>
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  </head>
 
   <body>
 
     {%- include header.html -%}
+
+    <!-- Centered Theme Toggle Button -->
+    <div class="theme-toggle-container">
+      <button id="theme-toggle">
+        <span id="theme-icon">🌞</span>
+      </button>
+    </div>
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
@@ -14,6 +25,9 @@
     </main>
 
     {%- include footer.html -%}
+
+    <!-- Include Theme Toggle Script -->
+    <script src="{{ '/assets/js/theme-toggle.js' | relative_url }}" defer></script>
 
   </body>
 

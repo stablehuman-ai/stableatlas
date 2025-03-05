@@ -1,0 +1,55 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1e1e1e;
+  --text-color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Centering the Theme Toggle Button */
+.theme-toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Header Adjustments for Light & Dark Mode */
+.site-header {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.site-title, .site-nav a {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .site-header {
+  background-color: #333;
+}
+
+[data-theme="dark"] .site-title, 
+[data-theme="dark"] .site-nav a {
+  color: #ffffff;
+}
