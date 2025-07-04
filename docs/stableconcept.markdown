@@ -11,13 +11,13 @@ hidden_title: true
 </h1>
 
 <p align="center">
-  <a href="/stableatlas/stableconcept">The Idea</a> • 
-  <a href="/about">Prototype</a> • 
-  <a href="/projects">Alpha</a> • 
-  <a href="/blog">Beta</a> • 
-  <a href="/contact">Release</a> •
-	<a href="/contact">Estimates</a> •
-	<a href="/contact">Challenges</a> •
+  <a href="{{ '/stableconcept' | relative_url }}">The Idea</a> •
+  <a href="{{ '/about' | relative_url }}">Prototype</a> •
+  <a href="{{ '/projects' | relative_url }}">Alpha</a> •
+  <a href="{{ '/blog' | relative_url }}">Beta</a> •
+  <a href="{{ '/contact' | relative_url }}">Release</a> •
+  <a href="{{ '/contact' | relative_url }}">Estimates</a> •
+  <a href="{{ '/contact' | relative_url }}">Challenges</a> •
 </p>
 
 
