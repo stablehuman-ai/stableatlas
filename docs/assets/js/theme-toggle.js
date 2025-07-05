@@ -1,21 +1,25 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("theme-toggle");
   const themeIcon = document.getElementById("theme-icon");
 
-  if (!themeToggle) {
-    console.error("Theme toggle button not found!");
+  if (!themeToggle || !themeIcon) {
+    console.error("Theme toggle elements not found!");
     return;
   }
 
-  // Load saved theme and update icon
-  const currentTheme = localStorage.getItem("theme") || "light";
-  document.documentElement.setAttribute("data-theme", currentTheme);
-  themeIcon.textContent = currentTheme === "dark" ? "🌙" : "🌞";
-
-  themeToggle.addEventListener("click", function () {
-    let theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  const applyTheme = (theme) => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
     themeIcon.textContent = theme === "dark" ? "🌙" : "🌞";
+    localStorage.setItem("theme", theme);
+  };
+
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(newTheme);
   });
+
+  // Set initial theme on page load
+  const savedTheme = localStorage.getItem("theme") || "light";
+  applyTheme(savedTheme);
 });

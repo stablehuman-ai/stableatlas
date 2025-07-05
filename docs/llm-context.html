@@ -1,0 +1,35 @@
+---
+# This front matter is essential for Jekyll to process this file correctly.
+layout: null
+permalink: /llm-context.txt
+---
+# Site-wide Context
+# Source: {{ site.url | append: site.baseurl }}
+# Generated on: {{ "now" | date_to_xmlschema }}
+# This document contains the combined text content of all posts and pages on the site for AI/LLM analysis.
+# ---
+{%- for post in site.posts %}
+# ====================================================================
+# Type: Post
+# Title: {{ post.title | xml_escape }}
+# URL: {{ post.url | absolute_url }}
+# Date: {{ post.date | date_to_string }}
+# ====================================================================
+
+{{ post.content | strip_html | strip_newlines | strip }}
+
+--- EOF ---
+{%- endfor -%}
+{%- for page in site.pages %}
+{%- if page.title and page.layout and page.content and page.url != "/llm-context.txt" -%}
+# ====================================================================
+# Type: Page
+# Title: {{ page.title | xml_escape }}
+# URL: {{ page.url | absolute_url }}
+# ====================================================================
+
+{{ page.content | strip_html | strip_newlines | strip }}
+
+--- EOF ---
+{%- endif -%}
+{%- endfor -%}

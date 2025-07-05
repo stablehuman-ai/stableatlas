@@ -9,14 +9,23 @@
 
   <body>
 
+    <!-- === REMOVE THIS SECTION START === -->
+    <!-- <div style="text-align: center; padding: 1rem;">
+      <button id="copy-all-content-btn" ... >
+        Copy All Content for AI
+      </button>
+    </div> -->
+    <!-- === REMOVE THIS SECTION END === -->
+
     {%- include header.html -%}
 
-    <!-- Centered Theme Toggle Button -->
-    <div class="theme-toggle-container">
+    <!-- === REMOVE THIS SECTION START === -->
+    <!-- <div class="theme-toggle-container">
       <button id="theme-toggle">
         <span id="theme-icon">🌞</span>
       </button>
-    </div>
+    </div> -->
+    <!-- === REMOVE THIS SECTION END === -->
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
@@ -26,9 +35,62 @@
 
     {%- include footer.html -%}
 
-    <!-- Include Theme Toggle Script -->
     <script src="{{ '/assets/js/theme-toggle.js' | relative_url }}" defer></script>
 
-  </body>
+     <!-- ======================================================= -->
+    <!--      JavaScript for the "Copy All Content" Button       -->
+    <!--      THIS IS THE SCRIPT TO CHECK/ADD                    -->
+    <!-- ======================================================= -->
+    <script>
+      // Find the button on the page using the ID we gave it.
+      const copyBtn = document.getElementById('copy-all-content-btn');
 
+      // Only run the code if the button actually exists on the page.
+      if (copyBtn) {
+        const btnText = copyBtn.querySelector('.btn-text');
+        const originalText = btnText.innerText;
+
+        copyBtn.addEventListener('click', async () => {
+          // Prevent running if already in a feedback state
+          if (copyBtn.disabled) return;
+          
+          // --- Provide immediate feedback to the user ---
+          btnText.innerText = 'Copying...';
+          copyBtn.classList.add('copying');
+          copyBtn.disabled = true;
+
+          try {
+            const response = await fetch('{{ "/llm-context.txt" | relative_url }}');
+            
+            if (!response.ok) {
+              throw new Error(`File not found. HTTP status: ${response.status}`);
+            }
+
+            const siteText = await response.text();
+            await navigator.clipboard.writeText(siteText);
+
+            // --- Success! Give feedback to the user. ---
+            copyBtn.classList.remove('copying');
+            copyBtn.classList.add('copied');
+            btnText.innerText = 'Copied!';
+            
+          } catch (err) {
+            // --- If anything went wrong, show an error. ---
+            console.error('Failed to copy content: ', err);
+            copyBtn.classList.remove('copying');
+            copyBtn.classList.add('error');
+            btnText.innerText = 'Error!';
+          } finally {
+            // --- No matter what happens, reset the button after 2 seconds. ---
+            setTimeout(() => {
+              btnText.innerText = originalText;
+              copyBtn.classList.remove('copied', 'error', 'copying'); // Remove all state classes
+              copyBtn.disabled = false;
+            }, 2000);
+          }
+        });
+      }
+    </script>
+
+  </body>
 </html>
