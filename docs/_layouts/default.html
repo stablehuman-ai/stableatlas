@@ -29,6 +29,10 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
+        <button id="copy-page-content-btn" class="util-btn" title="Copy Page Content for AI">
+          <span class="btn-icon">📄</span>
+          <span class="btn-text">Copy Page</span>
+        </button>
         {{ content }}
       </div>
     </main>
@@ -86,6 +90,58 @@
               btnText.innerText = originalText;
               copyBtn.classList.remove('copied', 'error', 'copying'); // Remove all state classes
               copyBtn.disabled = false;
+            }, 2000);
+          }
+        });
+      }
+    </script>
+
+    <!-- ======================================================= -->
+    <!--     JavaScript for the "Copy Page Content" Button        -->
+    <!-- ======================================================= -->
+    <script>
+      const pageCopyBtn = document.getElementById('copy-page-content-btn');
+
+      if (pageCopyBtn) {
+        const pageBtnText = pageCopyBtn.querySelector('.btn-text');
+        const pageOriginalText = pageBtnText.innerText;
+
+        pageCopyBtn.addEventListener('click', async () => {
+          if (pageCopyBtn.disabled) return;
+
+          pageBtnText.innerText = 'Copying...';
+          pageCopyBtn.classList.add('copying');
+          pageCopyBtn.disabled = true;
+
+          try {
+            const mainEl = document.querySelector('main.page-content');
+            if (!mainEl) throw new Error('Main content not found');
+
+            const clone = mainEl.cloneNode(true);
+            const btnInClone = clone.querySelector('#copy-page-content-btn');
+            if (btnInClone) btnInClone.remove();
+
+            const text = clone.innerText.trim();
+            if (!text) {
+              alert('Sorry, there is no content to copy on this page.');
+              throw new Error('Empty content');
+            }
+
+            await navigator.clipboard.writeText(text);
+
+            pageCopyBtn.classList.remove('copying');
+            pageCopyBtn.classList.add('copied');
+            pageBtnText.innerText = 'Copied!';
+          } catch (err) {
+            console.error('Failed to copy page content:', err);
+            pageCopyBtn.classList.remove('copying');
+            pageCopyBtn.classList.add('error');
+            pageBtnText.innerText = 'Error!';
+          } finally {
+            setTimeout(() => {
+              pageBtnText.innerText = pageOriginalText;
+              pageCopyBtn.classList.remove('copied', 'error', 'copying');
+              pageCopyBtn.disabled = false;
             }, 2000);
           }
         });
