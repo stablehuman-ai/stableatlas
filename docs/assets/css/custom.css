@@ -29,6 +29,30 @@ body {
   transition: background-color 0.3s;
 }
 
+/* Use flexbox for header layout to better control element placement */
+.site-header .wrapper {
+  display: flex;
+  align-items: center;
+  position: relative; /* anchor absolutely positioned nav on mobile */
+}
+
+@media screen and (max-width: 600px) {
+  .site-header .wrapper {
+    flex-wrap: wrap;
+  }
+}
+
+/* Remove floats from theme and space elements */
+.site-header .site-title {
+  float: none;
+  margin-right: 1rem;
+}
+
+.site-header .site-nav {
+  float: none;
+  margin-left: auto; /* push navigation to the right */
+}
+
 /* Ensure header links use the theme text color */
 .site-title, 
 .site-nav .page-link {
@@ -50,6 +74,16 @@ body {
   right: 15px; /* Aligns to the right edge of the wrapper */
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media screen and (max-width: 600px) {
+  .header-utils {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+  }
 }
 
 /* Base style for all utility buttons */
